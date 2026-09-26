@@ -1,0 +1,63 @@
+includes:
+	- vendor-bin/phpstan/vendor/phpstan/phpstan/conf/bleedingEdge.neon
+	- vendor/shopwell/core/DevOps/StaticAnalyze/PHPStan/extension.neon
+	- vendor/shopwell/core/DevOps/StaticAnalyze/PHPStan/rules.neon
+
+parameters:
+	phpVersion: 80200
+	level: 8
+	treatPhpDocTypesAsCertain: false
+	inferPrivatePropertyTypeFromConstructor: true
+	reportUnmatchedIgnoredErrors: true
+	checkFunctionNameCase: true
+	checkInternalClassCaseSensitivity: true
+	tmpDir: var/cache/phpstan_dev
+	bootstrapFiles:
+		- vendor/shopwell/core/DevOps/StaticAnalyze/phpstan-bootstrap.php
+
+	symfony:
+		constantHassers: false
+		containerXmlPath: 'var/cache/phpstan_dev/Shopwell_Core_DevOps_StaticAnalyze_StaticAnalyzeKernelPhpstan_devDebugContainer.xml'
+		consoleApplicationLoader: vendor/shopwell/core/DevOps/StaticAnalyze/console-application.php
+
+	type_perfect:
+		no_mixed_property: true
+		no_mixed_caller: true
+		null_over_false: true
+
+	excludePaths:
+		- **/vendor/*
+
+services:
+	- # register the class, so we can decorate it, but don't tag it as a rule, so only our decorator is used by PHPStan
+		class: Symplify\PHPStanRules\Rules\NoReturnSetterMethodRule
+
+rules:
+	# domain
+	- Symplify\PHPStanRules\Rules\Enum\RequireUniqueEnumConstantRule
+	- Symplify\PHPStanRules\Rules\PreventParentMethodVisibilityOverrideRule
+
+	# explicit naming
+	- Symplify\PHPStanRules\Rules\ForbiddenMultipleClassLikeInOneFileRule
+
+	- Symplify\PHPStanRules\Rules\Complexity\ForbiddenArrayMethodCallRule
+
+	# complexity rules
+	- Symplify\PHPStanRules\Rules\NoDynamicNameRule
+
+	# naming rules
+	- Shopwell\Core\DevOps\StaticAnalyze\PHPStan\Rules\Symplify\NoReturnSetterMethodWithFluentSettersRule
+	- Symplify\PHPStanRules\Rules\UppercaseConstantRule
+
+	# Shopwell core rules
+	- Shopwell\Core\DevOps\StaticAnalyze\PHPStan\Rules\Deprecation\DeprecatedMethodsThrowDeprecationRule
+	- Shopwell\Core\DevOps\StaticAnalyze\PHPStan\Rules\Migration\AddColumnRule
+	- Shopwell\Core\DevOps\StaticAnalyze\PHPStan\Rules\Migration\NoAfterStatementRule
+	- Shopwell\Core\DevOps\StaticAnalyze\PHPStan\Rules\Migration\NoDropStatementInUpdateRule
+	- Shopwell\Core\DevOps\StaticAnalyze\PHPStan\Rules\Tests\CoversAttributeRule
+	- Shopwell\Core\DevOps\StaticAnalyze\PHPStan\Rules\Tests\MockingSimpleObjectsNotAllowedRule
+	- Shopwell\Core\DevOps\StaticAnalyze\PHPStan\Rules\FinalClassRule
+	- Shopwell\Core\DevOps\StaticAnalyze\PHPStan\Rules\AbstractClassUsageRule
+	- Shopwell\Core\DevOps\StaticAnalyze\PHPStan\Rules\DecorationPatternRule
+	- Shopwell\Core\DevOps\StaticAnalyze\PHPStan\Rules\ExtensionRule
+	- Shopwell\Core\DevOps\StaticAnalyze\PHPStan\Rules\NoNewRequestInStorefrontRule

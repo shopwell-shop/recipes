@@ -1,0 +1,15 @@
+{
+    "bundles": {
+        "Shopwell\\Storefront\\Storefront": [
+            "all"
+        ]
+    },
+    "copy-from-recipe": {
+        "bin/": "%BIN_DIR%/"
+    },
+    "env": {
+        "STOREFRONT_PROXY_URL": "http://localhost",
+        "SHOPWELL_HTTP_CACHE_ENABLED": "1",
+        "SHOPWELL_HTTP_DEFAULT_TTL": "7200"
+    }
+}

@@ -1,0 +1,34 @@
+name: Update shopwell/platform package
+on:
+    workflow_dispatch:
+    push:
+        branches:
+            - main
+        paths:
+            - "shopwell/administration/**"
+            - "shopwell/core/**"
+            - "shopwell/storefront/**"
+            - "shopwell/elasticsearch/**"
+
+permissions:
+    contents: write
+
+jobs:
+    platform-sync:
+        runs-on: ubuntu-latest
+        concurrency: platform-sync-${{ github.ref }}
+        name: Sync files for shopwell/platform package
+        steps:
+            - name: Clone
+              uses: actions/checkout@v6
+
+            - name: Sync files
+              run: php .github/sync-platform.php
+
+            - name: Add files to git
+              run: git add .
+
+            - name: Update shopwell/platform package
+              uses: stefanzweifel/git-auto-commit-action@v7
+              with:
+                commit_message: 'chore: update shopwell/platform package'

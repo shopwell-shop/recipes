@@ -1,0 +1,5 @@
+# see https://github.com/shopwell-shop/opentelemetry/blob/main/README.md
+shopwell:
+    profiler:
+        integrations:
+            - OpenTelemetry
