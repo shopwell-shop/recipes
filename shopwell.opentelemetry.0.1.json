@@ -1,0 +1,30 @@
+{
+    "manifests": {
+        "shopwell/opentelemetry": {
+            "manifest": {
+                "copy-from-recipe": {
+                    "config/": "%CONFIG_DIR%/"
+                },
+                "bundles": {
+                    "Shopwell\\OpenTelemetry\\OpenTelemetryShopwellBundle": [
+                        "all"
+                    ]
+                }
+            },
+            "files": {
+                "config/packages/prod/opentelemetry.yaml": {
+                    "contents": [
+                        "# see https://github.com/shopwell-shop/opentelemetry/blob/main/README.md",
+                        "shopwell:",
+                        "    profiler:",
+                        "        integrations:",
+                        "            - OpenTelemetry",
+                        ""
+                    ],
+                    "executable": false
+                }
+            },
+            "ref": "c35d8273d435194e29f24cac266c464f2fa6a34f"
+        }
+    }
+}

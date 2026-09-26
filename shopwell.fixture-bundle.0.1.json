@@ -1,0 +1,15 @@
+{
+    "manifests": {
+        "shopwell/fixture-bundle": {
+            "manifest": {
+                "bundles": {
+                    "Shopwell\\FixtureBundle\\FixtureBundle": [
+                        "all"
+                    ]
+                }
+            },
+            "files": [],
+            "ref": "8175cefc7a1bd13103e8ad2c24919b84c788c100"
+        }
+    }
+}
