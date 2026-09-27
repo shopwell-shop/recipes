@@ -12,8 +12,8 @@ jobs:
             fail-fast: false
             matrix:
                 include:
-                    -   name: 6.7.0.0
-                        package: v6.7.0.0
+                    -   name: 6.7.15.0
+                        package: v6.7.15.0
                         php: 8.2
                         node: 24
         env:
@@ -52,7 +52,7 @@ jobs:
                     COMPOSER=$(cat <<EOF
                     {
                        "name": "shopwell/production",
-                       "license": "MIT",
+                       "license": "Apache-2.0",
                        "type": "project",
                        "require": {
                            "composer-runtime-api": "^2.0",
@@ -62,6 +62,10 @@ jobs:
                            "symfony/runtime": "^5.0|^6.0|^7.0"
                        },
                        "repositories": [
+                           {
+                               "type": "composer",
+                               "url": "https://shopwell-shop.github.io/conflicts/"
+                           },
                            {
                                "type": "path",
                                "url": "custom/plugins/*",
