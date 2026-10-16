@@ -1,5 +1,8 @@
 issuer: https://token.actions.githubusercontent.com
-subject_pattern: repo:shopwell-shop/recipes:ref:refs/heads/main
+# Repositories created after 2026-07-15 carry immutable OIDC subjects with the
+# numeric org and repo IDs: repo:shopwell-shop@329940059/recipes@1389148115:<context>.
+# The ID groups stay optional so repositories without them keep matching.
+subject_pattern: repo:shopwell-shop(@329940059)?/recipes(@1389148115)?:ref:refs/heads/main
 claim_pattern:
   workflow_ref: shopwell-shop/recipes/.github/workflows/platform-sync.ya?ml@refs/heads/main
 
